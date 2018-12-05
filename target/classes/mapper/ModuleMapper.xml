@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.dao.ModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.Module" >
+    <id column="m_id" property="mId" jdbcType="INTEGER" />
+    <result column="m_name" property="mName" jdbcType="VARCHAR" />
+    <result column="m_parentid" property="mParentid" jdbcType="INTEGER" />
+    <result column="m_path" property="mPath" jdbcType="VARCHAR" />
+    <result column="m_weight" property="mWeight" jdbcType="INTEGER" />
+    <result column="m_createtime" property="mCreatetime" jdbcType="TIMESTAMP" />
+    <result column="m_updatetime" property="mUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="m_remark" property="mRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    m_id, m_name, m_parentid, m_path, m_weight, m_createtime, m_updatetime, m_remark
+  </sql>
+  <!-- 根据id查询 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_module
+    where m_id = #{mId,jdbcType=INTEGER}
+  </select>
+   <!-- 根据id查询模块是否再用 -->
+  <select id="selmodul" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select COUNT(*)
+    from i_role_module
+    where rm_m_id = #{mId,jdbcType=INTEGER}
+  </select>
+   <!-- 根据父id查询 -->
+  <select id="selmodulByParentid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_module
+    where m_parentid = #{mId,jdbcType=INTEGER}
+  </select>
+   <!-- 多条件分页 -->
+  <select id="selModulByPage" resultMap="BaseResultMap" parameterType="com.hero.entity.ModuleQer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_module
+    <where>
+    	<if test="modulename != null" >
+        and m_name like "%"#{modulename,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
+    limit #{beginpage,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+  </select>
+  <!-- 查询相同父id下名称是否重复 -->
+  <select id="selModuleByParentAndName" resultType="java.lang.Integer" parameterType="com.hero.entity.Module" >
+    select count(*)
+    from i_module
+    where
+        m_name like #{mName,jdbcType=VARCHAR}
+      and m_parentid = #{mParentid,jdbcType=INTEGER}
+    
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_module
+    where m_id = #{mId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.hero.entity.Module" >
+    insert into i_module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mId != null" >
+        m_id,
+      </if>
+      <if test="mName != null" >
+        m_name,
+      </if>
+      <if test="mParentid != null" >
+        m_parentid,
+      </if>
+      <if test="mPath != null" >
+        m_path,
+      </if>
+      <if test="mWeight != null" >
+        m_weight,
+      </if>
+      <if test="mCreatetime != null" >
+        m_createtime,
+      </if>
+      <if test="mUpdatetime != null" >
+        m_updatetime,
+      </if>
+      <if test="mRemark != null" >
+        m_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mId != null" >
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="mName != null" >
+        #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mParentid != null" >
+        #{mParentid,jdbcType=INTEGER},
+      </if>
+      <if test="mPath != null" >
+        #{mPath,jdbcType=VARCHAR},
+      </if>
+      <if test="mWeight != null" >
+        #{mWeight,jdbcType=INTEGER},
+      </if>
+      <if test="mCreatetime != null" >
+        #{mCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mUpdatetime != null" >
+        #{mUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mRemark != null" >
+        #{mRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.Module" >
+    update i_module
+    <set >
+      <if test="mName != null" >
+        m_name = #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mParentid != null" >
+        m_parentid = #{mParentid,jdbcType=INTEGER},
+      </if>
+      <if test="mPath != null" >
+        m_path = #{mPath,jdbcType=VARCHAR},
+      </if>
+      <if test="mWeight != null" >
+        m_weight = #{mWeight,jdbcType=INTEGER},
+      </if>
+      <if test="mUpdatetime != null" >
+        m_updatetime = #{mUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mRemark != null" >
+        m_remark = #{mRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+</mapper>

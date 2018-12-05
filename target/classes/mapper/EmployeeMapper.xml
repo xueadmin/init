@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.Employee" >
+    <id column="e_id" property="eId" jdbcType="INTEGER" />
+    <result column="e_name" property="eName" jdbcType="VARCHAR" />
+    <result column="e_sex" property="eSex" jdbcType="CHAR" />
+    <result column="e_idcard" property="eIdcard" jdbcType="VARCHAR" />
+    <result column="e_birthday" property="eBirthday" jdbcType="TIMESTAMP" />
+    <result column="e_pwd" property="ePwd" jdbcType="VARCHAR" />
+    <result column="e_logintime" property="eLogintime" jdbcType="TIMESTAMP" />
+    <result column="e_createtime" property="eCreatetime" jdbcType="TIMESTAMP" />
+    <result column="e_updatetime" property="eUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="e_islockout" property="eIslockout" jdbcType="INTEGER" />
+    <result column="e_lockouttime" property="eLockouttime" jdbcType="TIMESTAMP" />
+    <result column="e_email" property="eEmail" jdbcType="VARCHAR" />
+    <result column="e_telphone" property="eTelphone" jdbcType="VARCHAR" />
+    <result column="e_pwdwrongcount" property="ePwdwrongcount" jdbcType="TINYINT" />
+    <result column="e_isexit" property="eIsexit" jdbcType="INTEGER" />
+    <result column="e_deptid" property="eDeptid" jdbcType="INTEGER" />
+    <result column="e_loginname" property="eLoginname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    e_id, e_name, e_sex, e_idcard, e_birthday, e_pwd, e_logintime, e_createtime, e_updatetime, 
+    e_islockout, e_lockouttime, e_email, e_telphone, e_pwdwrongcount, e_isexit, e_deptid, 
+    e_loginname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_employee
+    where e_id = #{eId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_employee
+    where e_id = #{eId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.Employee" >
+    insert into i_employee (e_id, e_name, e_sex, 
+      e_idcard, e_birthday, e_pwd, 
+      e_logintime, e_createtime, e_updatetime, 
+      e_islockout, e_lockouttime, e_email, 
+      e_telphone, e_pwdwrongcount, e_isexit, 
+      e_deptid, e_loginname)
+    values (#{eId,jdbcType=INTEGER}, #{eName,jdbcType=VARCHAR}, #{eSex,jdbcType=CHAR}, 
+      #{eIdcard,jdbcType=VARCHAR}, #{eBirthday,jdbcType=TIMESTAMP}, #{ePwd,jdbcType=VARCHAR}, 
+      #{eLogintime,jdbcType=TIMESTAMP}, #{eCreatetime,jdbcType=TIMESTAMP}, #{eUpdatetime,jdbcType=TIMESTAMP}, 
+      #{eIslockout,jdbcType=INTEGER}, #{eLockouttime,jdbcType=TIMESTAMP}, #{eEmail,jdbcType=VARCHAR}, 
+      #{eTelphone,jdbcType=VARCHAR}, #{ePwdwrongcount,jdbcType=TINYINT}, #{eIsexit,jdbcType=INTEGER}, 
+      #{eDeptid,jdbcType=INTEGER}, #{eLoginname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.Employee" >
+    insert into i_employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        e_id,
+      </if>
+      <if test="eName != null" >
+        e_name,
+      </if>
+      <if test="eSex != null" >
+        e_sex,
+      </if>
+      <if test="eIdcard != null" >
+        e_idcard,
+      </if>
+      <if test="eBirthday != null" >
+        e_birthday,
+      </if>
+      <if test="ePwd != null" >
+        e_pwd,
+      </if>
+      <if test="eLogintime != null" >
+        e_logintime,
+      </if>
+      <if test="eCreatetime != null" >
+        e_createtime,
+      </if>
+      <if test="eUpdatetime != null" >
+        e_updatetime,
+      </if>
+      <if test="eIslockout != null" >
+        e_islockout,
+      </if>
+      <if test="eLockouttime != null" >
+        e_lockouttime,
+      </if>
+      <if test="eEmail != null" >
+        e_email,
+      </if>
+      <if test="eTelphone != null" >
+        e_telphone,
+      </if>
+      <if test="ePwdwrongcount != null" >
+        e_pwdwrongcount,
+      </if>
+      <if test="eIsexit != null" >
+        e_isexit,
+      </if>
+      <if test="eDeptid != null" >
+        e_deptid,
+      </if>
+      <if test="eLoginname != null" >
+        e_loginname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        #{eId,jdbcType=INTEGER},
+      </if>
+      <if test="eName != null" >
+        #{eName,jdbcType=VARCHAR},
+      </if>
+      <if test="eSex != null" >
+        #{eSex,jdbcType=CHAR},
+      </if>
+      <if test="eIdcard != null" >
+        #{eIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="eBirthday != null" >
+        #{eBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ePwd != null" >
+        #{ePwd,jdbcType=VARCHAR},
+      </if>
+      <if test="eLogintime != null" >
+        #{eLogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eCreatetime != null" >
+        #{eCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eUpdatetime != null" >
+        #{eUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eIslockout != null" >
+        #{eIslockout,jdbcType=INTEGER},
+      </if>
+      <if test="eLockouttime != null" >
+        #{eLockouttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eEmail != null" >
+        #{eEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="eTelphone != null" >
+        #{eTelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="ePwdwrongcount != null" >
+        #{ePwdwrongcount,jdbcType=TINYINT},
+      </if>
+      <if test="eIsexit != null" >
+        #{eIsexit,jdbcType=INTEGER},
+      </if>
+      <if test="eDeptid != null" >
+        #{eDeptid,jdbcType=INTEGER},
+      </if>
+      <if test="eLoginname != null" >
+        #{eLoginname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.Employee" >
+    update i_employee
+    <set >
+      <if test="eName != null" >
+        e_name = #{eName,jdbcType=VARCHAR},
+      </if>
+      <if test="eSex != null" >
+        e_sex = #{eSex,jdbcType=CHAR},
+      </if>
+      <if test="eIdcard != null" >
+        e_idcard = #{eIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="eBirthday != null" >
+        e_birthday = #{eBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ePwd != null" >
+        e_pwd = #{ePwd,jdbcType=VARCHAR},
+      </if>
+      <if test="eLogintime != null" >
+        e_logintime = #{eLogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eCreatetime != null" >
+        e_createtime = #{eCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eUpdatetime != null" >
+        e_updatetime = #{eUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eIslockout != null" >
+        e_islockout = #{eIslockout,jdbcType=INTEGER},
+      </if>
+      <if test="eLockouttime != null" >
+        e_lockouttime = #{eLockouttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eEmail != null" >
+        e_email = #{eEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="eTelphone != null" >
+        e_telphone = #{eTelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="ePwdwrongcount != null" >
+        e_pwdwrongcount = #{ePwdwrongcount,jdbcType=TINYINT},
+      </if>
+      <if test="eIsexit != null" >
+        e_isexit = #{eIsexit,jdbcType=INTEGER},
+      </if>
+      <if test="eDeptid != null" >
+        e_deptid = #{eDeptid,jdbcType=INTEGER},
+      </if>
+      <if test="eLoginname != null" >
+        e_loginname = #{eLoginname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where e_id = #{eId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.Employee" >
+    update i_employee
+    set e_name = #{eName,jdbcType=VARCHAR},
+      e_sex = #{eSex,jdbcType=CHAR},
+      e_idcard = #{eIdcard,jdbcType=VARCHAR},
+      e_birthday = #{eBirthday,jdbcType=TIMESTAMP},
+      e_pwd = #{ePwd,jdbcType=VARCHAR},
+      e_logintime = #{eLogintime,jdbcType=TIMESTAMP},
+      e_createtime = #{eCreatetime,jdbcType=TIMESTAMP},
+      e_updatetime = #{eUpdatetime,jdbcType=TIMESTAMP},
+      e_islockout = #{eIslockout,jdbcType=INTEGER},
+      e_lockouttime = #{eLockouttime,jdbcType=TIMESTAMP},
+      e_email = #{eEmail,jdbcType=VARCHAR},
+      e_telphone = #{eTelphone,jdbcType=VARCHAR},
+      e_pwdwrongcount = #{ePwdwrongcount,jdbcType=TINYINT},
+      e_isexit = #{eIsexit,jdbcType=INTEGER},
+      e_deptid = #{eDeptid,jdbcType=INTEGER},
+      e_loginname = #{eLoginname,jdbcType=VARCHAR}
+    where e_id = #{eId,jdbcType=INTEGER}
+  </update>
+</mapper>
